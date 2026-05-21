@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste d'invités — Notre mariage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream:      #F8F3E8;
+      --cream-dark: #EDE4CE;
+      --cream-deep: #D4C9A8;
+      --navy:       #1C2D4A;
+      --navy-mid:   #243859;
+      --navy-light: #2E4B72;
+      --gold:       #B8965A;
+      --gold-light: #D4AF70;
+      --text-body:  #2A2218;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--navy);
+      background-image:
+        radial-gradient(ellipse at 20% 10%, rgba(46,75,114,0.55) 0%, transparent 55%),
+        radial-gradient(ellipse at 80% 90%, rgba(28,45,74,0.8) 0%, transparent 55%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cpath fill='%23B8965A' fill-opacity='0.04' d='M30 0L60 30L30 60L0 30z'/%3E%3C/g%3E%3C/svg%3E");
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 20px;
+      font-family: 'Raleway', sans-serif;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--cream);
+      max-width: 660px;
+      width: 100%;
+      position: relative;
+      animation: fadeUp 0.8s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 9px;
+      border: 1px solid var(--gold);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--navy);
+      padding: 44px 56px 38px;
+      text-align: center;
+      position: relative;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(184,150,90,0.10) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .header-ornament {
+      color: var(--gold);
+      font-size: 22px;
+      letter-spacing: 12px;
+      margin-bottom: 16px;
+      opacity: 0.75;
+    }
+    .header-eyebrow {
+      color: var(--gold-light);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .header-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.1;
+    }
+    .header-title em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+    .header-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(248,243,232,0.55);
+      margin-top: 12px;
+      letter-spacing: 0.5px;
+      line-height: 1.6;
+    }
+    .header-rule {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 22px;
+    }
+    .header-rule span {
+      height: 1px;
+      width: 56px;
+      background: linear-gradient(to right, transparent, var(--gold));
+    }
+    .header-rule span:last-child {
+      background: linear-gradient(to left, transparent, var(--gold));
+    }
+    .header-rule i { color: var(--gold); font-style: normal; font-size: 11px; }
+
+    /* ── BODY ── */
+    .body {
+      padding: 40px 56px 48px;
+    }
+
+    .intro-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--navy-mid);
+      text-align: center;
+      line-height: 1.75;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--cream-deep);
+      margin-bottom: 32px;
+    }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--cream-deep);
+    }
+
+    /* ── FORM GRID ── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: 28px;
+      row-gap: 26px;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-group.full { grid-column: 1 / -1; }
+
+    label.field-label {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--navy-light);
+      display: block;
+    }
+    label.field-label .req { color: var(--gold); margin-left: 2px; }
+
+    input[type="text"] {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px solid var(--cream-deep);
+      padding: 9px 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      color: var(--text-body);
+      outline: none;
+      transition: border-color 0.2s;
+      line-height: 1.4;
+    }
+    input[type="text"]::placeholder {
+      color: var(--cream-deep);
+      font-style: italic;
+    }
+    input[type="text"]:focus { border-bottom-color: var(--gold); }
+
+    /* ── PILL TOGGLES (radio + checkbox) ── */
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 2px;
+    }
+    .pill-option input { display: none; }
+    .pill-option label {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--navy-mid);
+      padding: 8px 16px;
+      border: 1.5px solid var(--cream-deep);
+      cursor: pointer;
+      transition: background 0.18s, border-color 0.18s, color 0.18s;
+      white-space: nowrap;
+    }
+    .pill-option input:checked + label {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: var(--cream);
+    }
+    .pill-option label:hover {
+      border-color: var(--gold);
+    }
+
+    /* ── SUBMIT ── */
+    .submit-area {
+      margin-top: 38px;
+      text-align: center;
+    }
+    .btn-submit {
+      position: relative;
+      overflow: hidden;
+      background: var(--navy);
+      color: var(--cream);
+      border: none;
+      font-family: 'Raleway', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      padding: 17px 52px;
+      cursor: pointer;
+    }
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+    .btn-submit:hover::before { transform: translateX(0); }
+    .btn-submit span { position: relative; z-index: 1; }
+
+    /* ── CONFIRMATION ── */
+    .confirmation {
+      display: none;
+      text-align: center;
+      padding: 56px 40px;
+      animation: fadeUp 0.5s ease both;
+    }
+    .confirmation-icon { font-size: 40px; color: var(--gold); margin-bottom: 18px; }
+    .confirmation h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 34px;
+      font-weight: 300;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .confirmation p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 16px;
+      color: var(--navy-light);
+      line-height: 1.7;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--navy);
+      padding: 16px 56px;
+      text-align: center;
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(248,243,232,0.3);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 560px) {
+      .header { padding: 34px 28px 30px; }
+      .header-title { font-size: 36px; }
+      .body { padding: 30px 28px 38px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: 1; }
+      .footer { padding: 16px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+
+  <div class="header">
+    <div class="header-ornament">✦ ✦ ✦</div>
+    <div class="header-eyebrow">Liste d'invités</div>
+    <div class="header-title">Notre <em>mariage</em></div>
+    <div class="header-subtitle">
+      Qui souhaitez-vous inviter parmi vos proches ?<br>
+      Merci de compléter ce formulaire pour chaque couple à inviter.
+    </div>
+    <div class="header-rule">
+      <span></span><i>❧</i><span></span>
+    </div>
+  </div>
+
+  <div class="body" id="formBody">
+
+    <p class="intro-text">
+      Indiquez-nous les coordonnées complètes de la personne<br>
+      que vous souhaitez convier à notre célébration.
+    </p>
+
+    <iframe name="hiddenTarget" style="display:none;"></iframe>
+
+    <form
+      id="weddingForm"
+      action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSca7HA9cEk5qytWERO-dJ-UquDCtp6atPbMYpV5EU-HRGOR-g/formResponse"
+      method="POST"
+      target="hiddenTarget"
+      onsubmit="handleSubmit(event)"
+    >
+
+      <!-- Qui es-tu? -->
+      <div class="section-label">Vous êtes</div>
+      <div class="form-grid" style="margin-bottom:32px;">
+        <div class="form-group full">
+          <label class="field-label">Votre identité <span class="req">*</span></label>
+          <div class="pill-group">
+            <div class="pill-option">
+              <input type="radio" id="r_pierre" name="entry.2115236578" value="Pierre" required>
+              <label for="r_pierre">Pierre</label>
+            </div>
+            <div class="pill-option">
+              <input type="radio" id="r_nathalie" name="entry.2115236578" value="Nathalie">
+              <label for="r_nathalie">Nathalie</label>
+            </div>
+            <div class="pill-option">
+              <input type="radio" id="r_dominique" name="entry.2115236578" value="Dominique">
+              <label for="r_dominique">Dominique</label>
+            </div>
+            <div class="pill-option">
+              <input type="radio" id="r_benoit" name="entry.2115236578" value="Benoît">
+              <label for="r_benoit">Benoît</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Personne invitée -->
+      <div class="section-label">Personne à inviter</div>
+      <div class="form-grid" style="margin-bottom:32px;">
+        <div class="form-group full">
+          <label class="field-label" for="nom_couple">Nom complet / couple <span class="req">*</span></label>
+          <input type="text" id="nom_couple" name="entry.1845216471" placeholder="ex. Sophie &amp; Marc Lefèvre" required>
+        </div>
+        <div class="form-group full">
+          <label class="field-label" for="rue">Rue et numéro <span class="req">*</span></label>
+          <input type="text" id="rue" name="entry.1910549092" placeholder="ex. Rue de la Paix 12" required>
+        </div>
+        <div class="form-group">
+          <label class="field-label" for="cp">Code postal <span class="req">*</span></label>
+          <input type="text" id="cp" name="entry.1708166229" placeholder="ex. 1000" required>
+        </div>
+        <div class="form-group">
+          <label class="field-label" for="ville">Ville <span class="req">*</span></label>
+          <input type="text" id="ville" name="entry.1116663523" placeholder="ex. Bruxelles" required>
+        </div>
+        <div class="form-group full">
+          <label class="field-label" for="pays">Pays <span class="req">*</span></label>
+          <input type="text" id="pays" name="entry.1679639978" placeholder="ex. Belgique" required>
+        </div>
+      </div>
+
+      <!-- Invitation -->
+      <div class="section-label">Détails de l'invitation</div>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label class="field-label">Nombre de personnes <span class="req">*</span></label>
+          <div class="pill-group">
+            <div class="pill-option">
+              <input type="radio" id="nb_1" name="entry.440274165" value="1" required>
+              <label for="nb_1">1 personne</label>
+            </div>
+            <div class="pill-option">
+              <input type="radio" id="nb_2" name="entry.440274165" value="2">
+              <label for="nb_2">2 personnes</label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group full">
+          <label class="field-label">Type d'invitation <span class="req">*</span></label>
+          <div class="pill-group">
+            <div class="pill-option">
+              <input type="checkbox" id="inv_reception" name="entry.567723696" value="Réception">
+              <label for="inv_reception">Réception</label>
+            </div>
+            <div class="pill-option">
+              <input type="checkbox" id="inv_dinner" name="entry.567723696" value="Dinner">
+              <label for="inv_dinner">Dinner</label>
+            </div>
+            <div class="pill-option">
+              <input type="checkbox" id="inv_soiree" name="entry.567723696" value="Soirée">
+              <label for="inv_soiree">Soirée</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-area">
+        <button type="submit" class="btn-submit">
+          <span>Soumettre cette invitation</span>
+        </button>
+      </div>
+
+    </form>
+
+    <div class="confirmation" id="confirmation">
+      <div class="confirmation-icon">✦</div>
+      <h2>Merci pour votre réponse</h2>
+      <p>Cette personne a bien été ajoutée à votre liste.<br>Vous pouvez soumettre un nouveau formulaire pour un autre invité.</p>
+    </div>
+
+  </div>
+
+  <div class="footer">Avec amour — Pour toute question, contactez-nous directement</div>
+
+</div>
+
+<script>
+  function handleSubmit(e) {
+    setTimeout(function() {
+      document.getElementById('weddingForm').style.display = 'none';
+      document.querySelector('.intro-text').style.display = 'none';
+      document.getElementById('confirmation').style.display = 'block';
+    }, 800);
+  }
+</script>
+
+</body>
+</html>
